@@ -1,0 +1,27 @@
+{
+  "name": "JS Metronome",
+  "short_name": "Metronome",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#141516",
+  "theme_color": "#2f3032",
+  "description": "A lightweight metronome built with Web Audio",
+  "icons": [
+    {
+      "src": "icons/metronome.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icons/metronome.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icons/metronome.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    }
+  ]
+}

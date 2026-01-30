@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#2f3032" />
+    <title>JS Metronome (Web Audio)</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="main-controls-row">
+        <button id="decreaseBtn" class="adjust-btn">−</button>
+
+        <div class="tempo-circle" id="tempoCircle">
+          <div class="bpm-display">
+            <div class="tempo-name" id="tempoName"></div>
+            <div style="margin-bottom: 10px;">
+              <span id="pulseIndicator" class="pulse-indicator"></span>
+              <span id="equalsSign" style="display:none">=</span>
+              <span class="bpm-number" id="bpmDisplay">100</span>
+            </div>
+            <div class="bpm-label" id="tempoLabel">BPM</div>
+          </div>
+        </div>
+
+        <button id="increaseBtn" class="adjust-btn">+</button>
+      </div>
+
+      <div class="play-controls">
+        <button id="timeSigBtn" class="button-controls time-sig-btn">
+          <span class="material-symbols-outlined" style="font-size: 40px"
+            >settings</span
+          >
+        </button>
+
+        <button
+          id="failBtn"
+          class="button-controls fail-btn"
+          style="display: none"
+        >
+          <span class="material-symbols-outlined" style="font-size: 60px"
+            >close</span
+          >
+        </button>
+        <button id="playPauseBtn" class="button-controls ">
+          <span class="material-symbols-outlined" style="font-size: 60px"
+            >play_arrow</span
+          >
+        </button>
+        <button
+          id="checkBtn"
+          class="button-controls check-btn"
+          style="display: none"
+        >
+          <span class="material-symbols-outlined" style="font-size: 60px"
+            >check</span
+          >
+        </button>
+
+        <button id="practiceBtn" class="button-controls practice-btn">
+          <span class="material-symbols-outlined" style="font-size: 40px"
+            >piano</span
+          >
+        </button>
+      </div>
+
+      <div class="stopwatch" id="stopwatch">00:00</div>
+
+      <div id="practiceDots" class="practice-dots" style="display: none"></div>
+
+      <div style="margin-top: 10px">
+        <button
+          id="exitPracticeBtn"
+          class="exit-practice-btn"
+          style="display: none"
+        >
+          Exit
+        </button>
+      </div>
+
+      <div id="messageToast" class="toast" style="display: none"></div>
+
+      <div class="menu-overlay" id="menuOverlay" style="display: none">
+        <div class="menu-content">
+          <h3>Subdivision</h3>
+          <div class="menu-options">
+            <button class="menu-option sub-option selected" data-sub="1">
+              1
+            </button>
+            <button class="menu-option sub-option" data-sub="2">
+              2
+            </button>
+            <button class="menu-option sub-option" data-sub="3">
+              3
+            </button>
+            <button class="menu-option sub-option" data-sub="4">
+              4
+            </button>
+            <button class="menu-option sub-option" data-sub="6">
+              5
+            </button>
+            <button class="menu-option sub-option" data-sub="8">
+              6
+            </button>
+            <button class="menu-option sub-option" data-sub="12">
+              7
+            </button>
+            <button class="menu-option sub-option" data-sub="16">
+              8
+            </button>
+          </div>
+          <button id="closeMenuBtn" class="close-menu-btn">Close</button>
+        </div>
+      </div>
+
+      <div class="menu-overlay" id="practiceOverlay" style="display: none">
+        <div class="menu-content">
+          <h3>Practice Settings</h3>
+          <div class="menu-options" style="grid-template-columns: 1fr">
+            <span
+              >Initial Tempo:
+              <button id="psNoteSelectInitial" class="practice-settings-note-select" type="button">
+                
+              </button> =
+              <input id="psStarting" class="practice-settings-input" style="margin-left:0px;" type="number" min="20" max="300" value="60"
+            />BPM</span>
+            <span
+              >Target Tempo:
+              <button id="psNoteSelectTarget" class="practice-settings-note-select" type="button">
+                
+              </button> =
+              <input id="psTarget" class="practice-settings-input" style="margin-left:0px;" type="number" min="20" max="300" value="120"
+            />BPM</span>
+            <span
+              >Required Correct:
+              <input id="psRequired" class="practice-settings-input" type="number" min="1" value="1"
+            /></span>
+            <span
+              >Increment:
+              <input id="psIncrement" class="practice-settings-input" type="number" min="1" value="10"
+            />BPM</span>
+            <span
+              >Penalty: <input id="psPenalty" class="practice-settings-input" type="number" min="0" value="10"
+            />BPM</label>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 12px">
+            <button id="startPracticeBtn" class="close-menu-btn">
+              Start Practice
+            </button>
+            <button
+              id="closePracticeBtn"
+              class="close-menu-btn"
+              style="
+                background: transparent;
+                border: 2px solid #667eea;
+                color: #667eea;
+              "
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+    <script src="js/metronome.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((reg) => {
+              console.log("Service worker registered.", reg);
+            })
+            .catch((err) => {
+              console.warn("Service worker registration failed:", err);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
