@@ -6,9 +6,9 @@ A simple metronome with customizable subdivisions and a structured practice mode
 
 This app is designed to provide a reliable, minimal metronome experience with a focus on intentional and incremental practice. It keeps the interface straightforward while adding tools that support progressive improvement.
 
-This project explores precise timing, user-driven practice workflows, and browser-based audio control. While intentionally minimal in scope, the app focuses on accuracy, clarity, and extensibility rather than feature bloat.
+This project includes precise timing, user-driven practice workflows, and browser-based audio control. While intentionally minimal in scope, the app focuses on accuracy, clarity, and extensibility rather than feature bloat.
 
-It is built using vanilla JavaScript with explicit timing and scheduling logic, and integrates the Web Audio API for external device interaction.
+It is built using vanilla JavaScript (PWA) with explicit timing and scheduling logic, and integrates the Web Audio API.
 
 ## Features
 
